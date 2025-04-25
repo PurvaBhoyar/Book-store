@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit{% else %}Add{% endif %} Book{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{% if object %}Edit{% else %}Add{% endif %} Book</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ object.title|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" name="author" value="{{ object.author|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ object.description|default:'' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ object.price|default:'' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" name="stock" value="{{ object.stock|default:'0' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="cover_image" class="form-label">Cover Image</label>
+            <input type="file" class="form-control" id="cover_image" name="cover_image">
+            {% if object.cover_image %}
+                <img src="{{ object.cover_image.url }}" width="100" class="mt-2">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

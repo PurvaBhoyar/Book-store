@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Books{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Manage Books</h2>
+    <a href="{% url 'admin_book_add' %}" class="btn btn-success mb-3">Add New Book</a>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>${{ book.price }}</td>
+                <td>{{ book.stock }}</td>
+                <td>
+                    <a href="{% url 'admin_book_edit' book.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'admin_book_delete' book.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
